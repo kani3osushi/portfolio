@@ -1,29 +1,30 @@
-import { Box, Button, VStack, Text, Heading } from "@chakra-ui/react";
-import Link from "next/link";
+// app/layout.tsx (例: サーバーコンポーネントでCookieからセッション取得)
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
+import type { Database } from "@/types/index"; // 自動生成タイプなど
 
-const HomePage = () => {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const supabaseServer = createServerComponentClient<Database>({ cookies });
+  const {
+    data: { session },
+  } = await supabaseServer.auth.getSession();
+
   return (
-    <VStack
-      align="center"
-      justify="center"
-      height="100vh"
-      bgGradient="linear(to-b, blue.100, blue.300)"
-      p={4}
-    >
-      <Box textAlign="center">
-        <Heading size="2xl" mb={4}>
-          未来無駄スキル冒険譚
-        </Heading>
-        <Text fontSize="lg" color="gray.700">
-          あなたの未来の履歴書を冒険して、ユニークなスキルを集めよう！
-        </Text>
-      </Box>
-
-      <Button colorScheme="teal" size="lg" boxShadow="lg">
-        <Link href="./timeline">冒険を始める</Link>
-      </Button>
-    </VStack>
+    <html lang="ja">
+      <body>
+        {session ? (
+          children
+        ) : (
+          <div>
+            <p>ログインしてください</p>
+            <a href="/auth/login">ログインページへ</a>
+          </div>
+        )}
+      </body>
+    </html>
   );
-};
-
-export default HomePage;
+}

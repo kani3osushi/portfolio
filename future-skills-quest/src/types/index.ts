@@ -1,69 +1,119 @@
-// types.ts
+export type Json = string | number | boolean | null | { [key: string]: Json } | Json[];
 
-export type User = {
-  id: string;
-  name: string;
-  goal: string;
-  created_at: string;
-};
-
-export type Event = {
-  id: number;
-  title: string;
-  description: string;
-  created_at: string;
-};
-
-export type Skill = {
-  id: number;
-  title: string;
-  description: string;
-  created_at: string;
-};
-
-export type UserSkill = {
-  id: number;
-  user_id: string;
-  skill_id: number;
-  acquired_at: string;
-};
-
-export type Choice = {
-  id: number;
-  event_id: number;
-  option: string;
-  skill_id: number;
-  created_at: string;
-};
-
-export type Database = {
+export interface Database {
   public: {
     Tables: {
-      users: {
-        Row: User; // 取得時の型
-        Insert: Omit<User, "id" | "created_at">; // 新規作成時の型
-        Update: Partial<Omit<User, "id">>; // 更新時の型
-      };
-      events: {
-        Row: Event;
-        Insert: Omit<Event, "id" | "created_at">;
-        Update: Partial<Omit<Event, "id">>;
-      };
-      skills: {
-        Row: Skill;
-        Insert: Omit<Skill, "id" | "created_at">;
-        Update: Partial<Omit<Skill, "id">>;
-      };
-      user_skills: {
-        Row: UserSkill;
-        Insert: Omit<UserSkill, "id" | "acquired_at">;
-        Update: Partial<Omit<UserSkill, "id">>;
+      choice_groups: {
+        Row: {
+          id: number;
+          year: number;
+        };
+        Insert: {
+          id?: number;
+          year: number;
+        };
+        Update: {
+          id?: number;
+          year?: number;
+        };
       };
       choices: {
-        Row: Choice;
-        Insert: Omit<Choice, "id" | "created_at">;
-        Update: Partial<Omit<Choice, "id">>;
+        Row: {
+          id: number;
+          choice_group_id: number;
+          text: string;
+          skill_id: number | null;
+          next_choice_group_id: number | null;
+        };
+        Insert: {
+          id?: number;
+          choice_group_id: number;
+          text: string;
+          skill_id?: number | null;
+          next_choice_group_id?: number | null;
+        };
+        Update: {
+          id?: number;
+          choice_group_id?: number;
+          text?: string;
+          skill_id?: number | null;
+          next_choice_group_id?: number | null;
+        };
+      };
+      endings: {
+        Row: {
+          id: number;
+          name: string;
+          description: string | null;
+          required_skill_ids: number[] | null;
+        };
+        Insert: {
+          id?: number;
+          name: string;
+          description?: string | null;
+          required_skill_ids?: number[] | null;
+        };
+        Update: {
+          id?: number;
+          name?: string;
+          description?: string | null;
+          required_skill_ids?: number[] | null;
+        };
+      };
+      skills: {
+        Row: {
+          id: number;
+          name: string;
+          rarity: string | null;
+          description: string | null;
+        };
+        Insert: {
+          id?: number;
+          name: string;
+          rarity?: string | null;
+          description?: string | null;
+        };
+        Update: {
+          id?: number;
+          name?: string;
+          rarity?: string | null;
+          description?: string | null;
+        };
+      };
+      user_choices: {
+        Row: {
+          id: number;
+          user_id: string;
+          choice_id: number;
+        };
+        Insert: {
+          id?: number;
+          user_id: string;
+          choice_id: number;
+        };
+        Update: {
+          id?: number;
+          user_id?: string;
+          choice_id?: number;
+        };
+      };
+      user_skills: {
+        Row: {
+          id: number;
+          user_id: string;
+          skill_id: number;
+        };
+        Insert: {
+          id?: number;
+          user_id: string;
+          skill_id: number;
+        };
+        Update: {
+          id?: number;
+          user_id?: string;
+          skill_id?: number;
+        };
       };
     };
   };
-};
+}
