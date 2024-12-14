@@ -8,6 +8,9 @@ export const config = {
   theme: {
     logo: "https://next-auth.js.org/img/logo/logo-sm.png",
   },
+  // pages: {
+  //   signIn: "/login", // 必要に応じてカスタムサインインページを指定
+  // },
   providers: [Github({
     clientId: process.env.AUTH_GITHUB_ID, clientSecret: process.env.AUTH_GITHUB_ID,
   }),

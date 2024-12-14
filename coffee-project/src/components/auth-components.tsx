@@ -19,6 +19,7 @@ export function SignIn({
 }
 
 export function SignOut({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   provider,
   ...props
 }: { provider?: string } & React.ComponentPropsWithRef<typeof Button>) {
