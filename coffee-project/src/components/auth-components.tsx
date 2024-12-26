@@ -1,6 +1,7 @@
 import React from "react";
-import { Button } from "./ui/button";
+
 import { signIn, signOut } from "@/auth";
+import { Button } from "./ui/Button";
 
 export function SignIn({
   provider,
@@ -31,7 +32,7 @@ export function SignOut({
       }}
       className="w-full"
     >
-      <Button variant="ghost" className="w-full p-0" {...props}>
+      <Button className="w-full p-0" {...props}>
         ログアウト
       </Button>
     </form>

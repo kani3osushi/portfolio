@@ -22,7 +22,7 @@ export const config = {
     authorized({ request, auth }) {
       try {
         const { pathname } = request.nextUrl;
-        if (pathname === "/server-example") return !!auth; //ログインしているユーザーだけ見れるページだよ。
+        if (pathname === "/server-example") return !!auth; //ログインしているユーザーだけ見れるページ
         return true; //ログインしてなくても取りあえず全ページ見れるよ。
       } catch (err) {
         console.log(err);
