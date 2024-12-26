@@ -9,6 +9,7 @@ export function MainNav() {
     <div className="flex gap-4 items-center">
       <CustomLink href="/">HOME</CustomLink>
       <Link href="./techbeans">TechBeans</Link>
+      <Link href="./favorites">Favorites</Link>
     </div>
   );
 }
