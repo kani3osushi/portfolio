@@ -5,7 +5,7 @@ export default async function Home() {
   return (
     <>
       <section
-        className="h-screen w-full bg-center bg-cover text-primary"
+        className="h-screen w-full bg-cover text-primary"
         style={{ backgroundImage: "url('/mv-02.jpg')" }}
       >
         <h1

@@ -40,11 +40,9 @@ export default function RootLayout({
       <body
         className={`${notoJP.className} bg-primary-background text-primary`}
       >
-        <div className="flex flex-col justify-between w-full h-full min-h-screen max-w-screen-xl m-auto">
+        <div className="flex flex-col justify-between w-full h-full min-h-screen m-auto">
           <Header />
-          <main className="flex-auto w-full max-w-screen-xl px-4 py-4 mx-auto sm:px-6 md:px-6 md:py-6">
-            {children}
-          </main>
+          <main className="flex-auto w-full py-4 mx-auto">{children}</main>
         </div>
       </body>
     </html>
