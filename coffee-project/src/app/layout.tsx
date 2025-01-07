@@ -42,7 +42,7 @@ export default function RootLayout({
       >
         <div className="flex flex-col justify-between w-full h-full min-h-screen m-auto">
           <Header />
-          <main className="flex-auto w-full py-4 mx-auto">{children}</main>
+          <main className="flex-auto w-full mx-auto">{children}</main>
         </div>
       </body>
     </html>

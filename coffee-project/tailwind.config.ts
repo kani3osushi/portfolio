@@ -16,6 +16,7 @@ export default {
 			colors: {
 				primary: { DEFAULT: 'var(--primary)', background: 'var(--primary-bg)' },
 				secondary: { DEFAULT: 'var(--secondary)', background: 'var(--secondary-bg)' },
+				accent: { DEFAULT: 'var(--accent)', background: 'var(--accent-bg)' },
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

@@ -14,7 +14,7 @@ export function SignIn({
         await signIn(provider);
       }}
     >
-      <Button {...props}>サインイン</Button>
+      <Button {...props}>Sign up</Button>
     </form>
   );
 }
@@ -33,7 +33,7 @@ export function SignOut({
       className="w-full"
     >
       <Button className="w-full p-0" {...props}>
-        ログアウト
+        Logout
       </Button>
     </form>
   );

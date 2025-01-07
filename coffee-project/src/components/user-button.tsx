@@ -2,11 +2,11 @@ import { auth } from "@/auth";
 import { SignIn, SignOut } from "./auth-components";
 export default async function UserButton() {
   const session = await auth();
-  if (!session?.user) return <SignIn />;
+  if (!session?.user) return <SignIn variant="signIn" />;
 
   return (
     <div className="flex gap-2 items-center">
-      <SignOut />
+      <SignOut variant="signIn" />
     </div>
   );
 }

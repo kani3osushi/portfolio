@@ -8,9 +8,34 @@
     --primary-bg: #f2e8cf;
     --secondary: #4e342e;
     --secondary-bg: #ededd8;
+    --accent: #b71c1c;
+    --accent-bg: #000;
     --radius: 0.5rem;
   }
 }
+
+/* 矢印を表示する要素に追加 */
+.step-card.arrow::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -40%; /* 隣の要素との間に表示 */
+  translate: 40% -50%;
+  width: 45px;
+  height: 50px;
+  background-color: #4e342e;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+button img {
+  transition: 0.2s all;
+}
+button:hover img {
+  translate: 2px;
+}
+img {
+  vertical-align: bottom;
+}
+
 /* 
 @layer base {
   * {
