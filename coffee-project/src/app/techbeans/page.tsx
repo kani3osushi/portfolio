@@ -22,7 +22,7 @@ export default function page() {
         </div>
       </section>
       <section className="w-full py-20 bg-secondary-background">
-        <div className="w-full max-w-7xl m-auto">
+        <div className="container mx-auto">
           <Card />
         </div>
       </section>
