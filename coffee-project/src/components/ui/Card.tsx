@@ -8,7 +8,7 @@ type DataProps = {
   title: string;
   description: string;
   slug: string;
-  size?: string;
+  size?: number;
 };
 
 const data: DataProps[] = [
@@ -51,6 +51,7 @@ const data: DataProps[] = [
     src: "/tech/django-logo-positive.png",
     alt: "Django Logo",
     slug: "django",
+    size: 65,
   },
   {
     title: "Go",
@@ -74,9 +75,8 @@ const Card = () => {
             <Image
               src={data.src}
               alt={data.alt}
-              width={55}
+              width={data.size ? 120 : 55}
               height={55}
-              className=""
             />
             <FavoriteButton className="" />
           </div>
