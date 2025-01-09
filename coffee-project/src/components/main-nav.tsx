@@ -17,12 +17,12 @@ export function MainNav({ className }: { className?: string }) {
         DevBeans
       </CustomLink>
       <Link
-        href="./techbeans"
+        href="/techbeans"
         className={`font-bold leading-relaxed ${notoJP.className}`}
       >
         TechBeans
       </Link>
-      <Link href="./favorites" className={`font-bold ${notoJP.className}`}>
+      <Link href="/favorites" className={`font-bold ${notoJP.className}`}>
         Favorites
       </Link>
     </nav>

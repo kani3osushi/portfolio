@@ -1,4 +1,6 @@
 import { auth } from "@/auth";
+import FavoritesClient from "@/components/client-favorite";
+// ↑ こちらはおそらく自作のコンポーネント？
 
 export default async function page() {
   const session = await auth();
@@ -17,6 +19,7 @@ export default async function page() {
           {JSON.stringify(session, null, 2)}
         </pre>
       </div>
+      <FavoritesClient />
     </div>
   );
 }
