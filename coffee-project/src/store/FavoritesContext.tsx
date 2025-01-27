@@ -1,49 +1,57 @@
 "use client";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useState, useEffect, ReactNode } from "react";
 
-// card 型は ID と名前だけでもよいし、必要に応じてプロパティを増やせる
-type Card = {
-  id: string;
-  name: string;
-  // 他に必要なプロパティがあれば追加
-};
+interface FavoritesContextProps {
+  favorites: string[]; // slugの配列に変更
+  addFavorite: (slug: string) => void;
+  removeFavorite: (slug: string) => void;
+}
 
-type FavoritesContextType = {
-  favorites: Card[]; // 現在のお気に入り一覧
-  addFavorite: (card: Card) => void; // お気に入り追加
-  removeFavorite: (cardId: string) => void; // お気に入り削除
-};
-
-const FavoritesContext = createContext<FavoritesContextType | undefined>(
+const FavoritesContext = createContext<FavoritesContextProps | undefined>(
   undefined
 );
 
-export const FavoritesProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  const [favorites, setFavorites] = useState<Card[]>([]);
+export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
+  const [favorites, setFavorites] = useState<string[]>([]);
 
-  // マウント時にローカルストレージからお気に入りを読み込む
+  // ローカルストレージからお気に入りを読み込み
   useEffect(() => {
     const storedFavorites = localStorage.getItem("favorites");
     if (storedFavorites) {
-      setFavorites(JSON.parse(storedFavorites));
+      try {
+        const parsedFavorites = JSON.parse(storedFavorites);
+        if (Array.isArray(parsedFavorites)) {
+          const uniqueFavorites = Array.from(
+            new Set(parsedFavorites.filter((slug) => typeof slug === "string"))
+          );
+          setFavorites(uniqueFavorites);
+        } else {
+          console.error("Favorites in localStorage is not an array.");
+        }
+      } catch (error) {
+        console.error("Failed to parse favorites from localStorage:", error);
+      }
     }
   }, []);
 
-  // お気に入りを追加する
-  const addFavorite = (card: Card) => {
-    // すでに存在しない場合だけ追加
-    if (!favorites.some((item) => item.id === card.id)) {
-      const updatedFavorites = [...favorites, card];
-      setFavorites(updatedFavorites);
-      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+  // お気に入りを追加
+  const addFavorite = (slug: string) => {
+    if (typeof slug !== "string" || slug.trim() === "") {
+      console.error("Invalid slug provided:", slug);
+      return;
+    }
+
+    if (!favorites.includes(slug)) {
+      const updatedFavorites = [...favorites, slug];
+      const uniqueFavorites = Array.from(new Set(updatedFavorites)); // 重複防止
+      setFavorites(uniqueFavorites);
+      localStorage.setItem("favorites", JSON.stringify(uniqueFavorites));
     }
   };
 
-  // お気に入りを削除する
-  const removeFavorite = (cardId: string) => {
-    const updatedFavorites = favorites.filter((item) => item.id !== cardId);
+  // お気に入りを削除
+  const removeFavorite = (slug: string) => {
+    const updatedFavorites = favorites.filter((item) => item !== slug);
     setFavorites(updatedFavorites);
     localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
   };
@@ -57,9 +65,8 @@ export const FavoritesProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
-// カスタムフックで Context を扱いやすく
 export const useFavorites = () => {
-  const context = useContext(FavoritesContext);
+  const context = React.useContext(FavoritesContext);
   if (!context) {
     throw new Error("useFavorites must be used within a FavoritesProvider");
   }

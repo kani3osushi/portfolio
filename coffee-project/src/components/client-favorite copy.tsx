@@ -1,7 +1,6 @@
 "use client";
-import React from "react";
 import { useFavorites } from "@/store/FavoritesContext";
-// import Card from "./ui/Card";
+import React from "react";
 
 function FavoritesClient() {
   const { favorites } = useFavorites();
@@ -11,12 +10,7 @@ function FavoritesClient() {
       {favorites.length === 0 ? (
         <li>お気に入りがありません。</li>
       ) : (
-        favorites.map((id) => (
-          <li key={id}>
-            {id}
-            {/* <Card /> */}
-          </li>
-        ))
+        favorites.map((card) => <li key={card.slug}>{card.slug}</li>)
       )}
     </ul>
   );
