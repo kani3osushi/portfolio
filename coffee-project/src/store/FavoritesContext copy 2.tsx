@@ -1,12 +1,8 @@
 "use client";
-import { CardProps } from "@/type";
 import React, { createContext, useState, useEffect, ReactNode } from "react";
 
-// 型定義
-
 interface FavoritesContextProps {
-  techData: CardProps[]; // APIから取得するデータ
-  favorites: string[]; // slugの配列
+  favorites: string[]; // slugの配列に変更
   addFavorite: (slug: string) => void;
   removeFavorite: (slug: string) => void;
 }
@@ -16,24 +12,7 @@ const FavoritesContext = createContext<FavoritesContextProps | undefined>(
 );
 
 export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
-  const [techData, setTechData] = useState<CardProps[]>([]); // APIから取得するデータ
   const [favorites, setFavorites] = useState<string[]>([]);
-
-  // API から tech-data.json を取得
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/card");
-        if (!response.ok) throw new Error("Failed to fetch tech data");
-        const data = await response.json();
-        setTechData(data);
-      } catch (error) {
-        console.error("Error fetching tech data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   // ローカルストレージからお気に入りを読み込み
   useEffect(() => {
@@ -79,7 +58,7 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <FavoritesContext.Provider
-      value={{ techData, favorites, addFavorite, removeFavorite }}
+      value={{ favorites, addFavorite, removeFavorite }}
     >
       {children}
     </FavoritesContext.Provider>

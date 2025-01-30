@@ -1,8 +1,13 @@
-import Card from "@/components/ui/Card";
 import { merriweather } from "../layout";
 import Image from "next/image";
+import TechList from "@/components/ui/TechList";
+import { getTechData } from "@/lib/getTechData";
 
-export default function page() {
+export default async function page() {
+  // ここでJSONを読み込み
+  const data = await getTechData();
+  const techData = data.techData;
+
   return (
     <>
       <section className="w-full bg-cover text-primary bg-no-repeat py-20 -mt-24">
@@ -23,7 +28,7 @@ export default function page() {
       </section>
       <section className="w-full py-20 bg-secondary-background">
         <div className="container mx-auto">
-          <Card />
+          <TechList data={techData} />
         </div>
       </section>
     </>
