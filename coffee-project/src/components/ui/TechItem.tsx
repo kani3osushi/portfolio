@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { CardProps } from "@/type";
 import { merriweather } from "@/app/layout";
+import FavoriteButton from "./FavoriteButton";
 
 const TechItem: React.FC<CardProps> = ({
   id,
@@ -18,8 +19,8 @@ const TechItem: React.FC<CardProps> = ({
       <div className="bg-white rounded-2xl shadow-lg p-8 relative h-full">
         <div className="flex justify-between items-center h-14">
           <Image src={src} alt={alt} width={size ? size : 55} height={55} />
-          {/* TODO : ここにFavoriteButtonを追加 コンテキスト使わないかも。
-          <FavoriteButton slug={id} /> */}
+          {/* TODO : ここにFavoriteButtonを追加 コンテキスト使わないかも。 */}
+          <FavoriteButton slug={id} />
         </div>
         <h3
           className={`text-center text-3xl sm:text-4xl mt-2 font-bold  tracking-wider leading-tight ${merriweather.className}`}

@@ -13,6 +13,8 @@ export default async function page() {
           {JSON.stringify(session, null, 2)}
         </pre>
       </div>
+      {/* TODO お気に入りしたものを表示させたい。getUserFavorites関数を作成するかなー。
+      JSONではfsを使わないとPOSTできないから、DB使わないとかも。Prismaありやで。 */}
     </div>
   );
 }

@@ -14,6 +14,7 @@ const TechList = ({ data }: { data: CardProps[] }) => {
               alt={data.alt}
               title={data.title}
               description={data.description}
+              size={data.size}
             />
           </li>
         ))}
