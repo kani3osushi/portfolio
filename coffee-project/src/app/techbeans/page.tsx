@@ -2,11 +2,25 @@ import { merriweather } from "../layout";
 import Image from "next/image";
 import TechList from "@/components/ui/TechList";
 import { getTechData } from "@/lib/getTechData";
+import { auth } from "@/auth";
 
 export default async function page() {
   // ここでJSONを読み込み
   const data = await getTechData();
   const techData = data.techData;
+  const session = await auth();
+  const rawPassword = "a=a?a&a";
+  const encodedPassword = encodeURIComponent(rawPassword);
+  console.log(encodedPassword);
+
+  // if (!session) {
+  //   return {
+  //     redirect: {
+  //       destination: "/login",
+  //       permanent: false,
+  //     },
+  //   };
+  // }
 
   return (
     <>
