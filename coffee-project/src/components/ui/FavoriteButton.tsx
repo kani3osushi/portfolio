@@ -1,59 +1,42 @@
 "use client";
-import React, { useState, useEffect } from "react";
 
-function isLoggedIn() {
-  // クッキーやセッションストレージからトークンチェック
-  // or フロント側でユーザーIDを保持しているか判定 etc.
-  return Boolean(localStorage.getItem("accessToken"));
-}
+import React, { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 const FavoriteButton: React.FC<{ slug: string }> = ({ slug }) => {
+  const { data: session } = useSession();
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    // 初期化(ログインしてるかどうかで読み込み先を分岐)
-    if (isLoggedIn()) {
-      // サーバーからお気に入り情報をfetchしてセットする
+    // セッションがある場合はサーバーから、ない場合はローカルストレージから
+    if (session) {
+      // サーバーからお気に入り情報を取得
     } else {
-      // ローカルストレージからお気に入りを読み込み
       const localFavorites = JSON.parse(
         localStorage.getItem("favorites") ?? "[]"
       );
       setIsFavorite(localFavorites.includes(slug));
     }
-  }, [slug]);
+  }, [slug, session]);
 
-  const toggleFavorite = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const toggleFavorite = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     event.stopPropagation();
 
-    if (isLoggedIn()) {
-      // サーバーに POST or DELETE
-      if (isFavorite) {
-        fetch("/api/favorite/remove", {
-          method: "POST",
-          body: JSON.stringify({ slug }),
-        });
-      } else {
-        fetch("/api/favorite/add", {
-          method: "POST",
-          body: JSON.stringify({ slug }),
-        });
-      }
+    if (session) {
+      // サーバーサイドの処理
     } else {
-      // ローカルストレージに書き込み
-      let localFavorites = JSON.parse(
+      // ローカルストレージの処理
+      const localFavorites = JSON.parse(
         localStorage.getItem("favorites") ?? "[]"
       );
-      if (isFavorite) {
-        localFavorites = localFavorites.filter((item: string) => item !== slug);
-      } else {
-        localFavorites.push(slug);
-      }
-      localStorage.setItem("favorites", JSON.stringify(localFavorites));
+      const newFavorites = isFavorite
+        ? localFavorites.filter((item: string) => item !== slug)
+        : [...localFavorites, slug];
+      
+      localStorage.setItem("favorites", JSON.stringify(newFavorites));
+      setIsFavorite(!isFavorite);
     }
-
-    setIsFavorite(!isFavorite);
   };
 
   return <button onClick={toggleFavorite}>{isFavorite ? "❤️" : "🤍"}</button>;

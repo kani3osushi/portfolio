@@ -1,7 +1,4 @@
-import { auth } from "@/auth";
-
 export default async function page() {
-  const session = await auth();
 
   return (
     <div className="flex flex-col gap-6">

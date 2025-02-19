@@ -4,8 +4,15 @@ import LogoGallery from "@/components/ui/LogoGallary";
 import StepsSection from "@/components/ui/StepSection";
 import Image from "next/image";
 import Link from "next/link";
+import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
+  const session = await auth();
+  if (!session?.user) {
+    redirect("/sign-in");
+  }
+
   return (
     <>
       {/* Hero Section */}
